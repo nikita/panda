@@ -21,6 +21,32 @@ if os.getenv("PEDAL"):
     "-DPEDAL",
   ]
 
+elif os.getenv("GATEWAY"):
+  PROJECT = "panda"
+  STARTUP_FILE = "startup_stm32f413xx.s"
+  if os.getenv("IBST"):
+    MAIN = "ibst/main.c"
+  elif os.getenv("SDSU"):
+    MAIN = "smart_dsu/main.c"
+  elif os.getenv("EPS_GW"):
+    MAIN = "eps_gw/main.c"
+  elif os.getenv("GPIO_EXAMPLE"):
+    MAIN = "gpio_example/main.c"
+  elif os.getenv("STEER_ACTUATOR_DEMO"):
+    MAIN = "steer_actuator_demo/main.c"
+    # TODO: clean this mess up, maybe get pwd or something?
+  PROJECT_FLAGS = [
+    "-mcpu=cortex-m4",
+    "-mhard-float",
+    "-DSTM32F4",
+    "-DSTM32F413xx",
+    "-mfpu=fpv4-sp-d16",
+    "-fsingle-precision-constant",
+    "-Os",
+    "-g",
+    "-DGATEWAY",
+  ]
+
 else:
   PROJECT = "panda"
   STARTUP_FILE = "startup_stm32f413xx.s"
